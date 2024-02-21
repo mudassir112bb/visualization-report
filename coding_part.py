@@ -17,12 +17,14 @@ print("Descriptive Statistics:\n", descriptive_stats)
 correlation_matrix = df.corr()
 print("\nCorrelation Matrix:\n", correlation_matrix)
 
+# Skewness and Kurtosis
+skewness = df.skew(numeric_only=True)
+kurtosis = df.kurtosis(numeric_only=True)
+print("\nSkewness:\n", skewness)
+print("\nKurtosis:\n", kurtosis)
+
 # Function 1: Histogram of Age Distribution
 def plot_age_distribution(dataframe):
-    """
-    This function plots the age distribution of patients.
-    :param dataframe: pandas DataFrame containing the dataset
-    """
     plt.figure(figsize=(10, 6))
     sns.histplot(dataframe['age'], bins=30, kde=True, color='skyblue')
     plt.title('Age Distribution of Patients')
@@ -32,11 +34,6 @@ def plot_age_distribution(dataframe):
 
 # Function 2: Scatter Plot of Ejection Fraction vs. Serum Creatinine
 def plot_ef_vs_sc(dataframe):
-    """
-    This function plots the scatter plot of ejection fraction vs. serum creatinine,
-    colored by the death event outcome.
-    :param dataframe: pandas DataFrame containing the dataset
-    """
     plt.figure(figsize=(10, 6))
     sns.scatterplot(data=dataframe, x='ejection_fraction', y='serum_creatinine', hue='DEATH_EVENT', style='DEATH_EVENT', palette='coolwarm', s=100)
     plt.title('Ejection Fraction vs. Serum Creatinine by Death Event')
@@ -47,12 +44,6 @@ def plot_ef_vs_sc(dataframe):
 
 # Function 3: Heatmap of Correlation Matrix
 def plot_correlation_matrix(dataframe):
-    """
-    This function plots the heatmap of the correlation matrix for numerical variables in the dataset,
-    using a unique 'viridis' color map. Adjustments are made to ensure all correlation coefficients
-    are fully visible.
-    :param dataframe: pandas DataFrame containing the dataset
-    """
     corr_matrix = dataframe.select_dtypes(include=['float64', 'int64']).corr()
     plt.figure(figsize=(12, 8))
     sns.heatmap(corr_matrix, annot=True, cmap='viridis', fmt=".2f", linewidths=.5, cbar_kws={'shrink': .5})
